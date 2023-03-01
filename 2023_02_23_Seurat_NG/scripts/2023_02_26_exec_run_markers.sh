@@ -1,0 +1,17 @@
+#!/bin/sh
+
+sbatch 2023_02_25_run_markers.sbatch seurat_clusters
+
+sbatch 2023_02_25_run_markers.sbatch HumanPrimaryCellAtlasData
+
+sbatch 2023_02_25_run_markers.sbatch BlueprintEncodeData
+
+sbatch 2023_02_25_run_markers.sbatch MouseRNAseqData
+
+sbatch 2023_02_25_run_markers.sbatch ImmGenData
+
+sbatch 2023_02_25_run_markers.sbatch DatabaseImmuneCellExpressionData
+
+sbatch 2023_02_25_run_markers.sbatch NovershternHematopoieticData
+
+sbatch 2023_02_25_run_markers.sbatch MonacoImmuneData

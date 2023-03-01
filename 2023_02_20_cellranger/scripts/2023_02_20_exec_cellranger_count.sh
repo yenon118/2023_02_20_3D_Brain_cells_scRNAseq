@@ -1,0 +1,32 @@
+sbatch 2023_02_20_run_cellranger_count.sbatch 10_Cont_3
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 11_OSA_NG_3
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 12_OSA_NG_4
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 13_OSA_NG_5
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 14_OSA_POS_3
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 15_OSA_POS_4
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 16_OSA_POS_5
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 1_NG_1
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 2_NG_2
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 3_Cont_1
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 4_Cont_2
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 5_OSA_NG_1
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 6_OSA_NG_2
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 7_OSA_POS_1
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 8_OSA_POS_2
+
+sbatch 2023_02_20_run_cellranger_count.sbatch 9_NG_3
+
