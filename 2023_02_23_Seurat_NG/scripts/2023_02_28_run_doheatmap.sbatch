@@ -16,4 +16,4 @@ cd /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Br
 source activate seurat
 
 
-Rscript 2023_02_28_doheatmap.R
+Rscript 2023_02_28_doheatmap.R -n ${1}
