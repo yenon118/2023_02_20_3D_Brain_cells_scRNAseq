@@ -16,4 +16,4 @@ cd /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Br
 source activate seurat
 
 
-Rscript 2023_02_28_doheatmap.R -n ${1} -o Brain --remove_ensembl_ids
+Rscript 2023_02_28_doheatmap.R -n ${1} --remove_ensembl_ids
