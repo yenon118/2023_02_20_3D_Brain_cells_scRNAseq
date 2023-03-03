@@ -190,7 +190,9 @@ for (i in 1:length(libraries)) {
 					plot = p,
 					path = output_path,
 					width = 14,
-					height = ifelse(n > 10, 18, 10)
+					height = 18,
+					units = "in",
+					dpi = 300
 				)
 
 				write.table(
