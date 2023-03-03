@@ -30,6 +30,7 @@ parser <- argparse::ArgumentParser()
 
 parser$add_argument("-n", "--num", type="integer", help="Top number for slice", default=10)
 parser$add_argument("--remove_ensembl_ids", action='store_true', help="Remove Ensembl IDs")
+parser$add_argument("--remove_mitochondria", action='store_true', help="Remove mitochondria")
 
 args <- parser$parse_args()
 
@@ -41,6 +42,12 @@ n <- tryCatch({
 
 remove_ensembl_ids <- tryCatch({
 	args$remove_ensembl_ids
+}, error = function(e) {
+	return(FALSE)
+})
+
+remove_mitochondria <- tryCatch({
+	args$remove_mitochondria
 }, error = function(e) {
 	return(FALSE)
 })
@@ -143,15 +150,19 @@ for (i in 1:length(libraries)) {
 			if(nrow(data_markers) > 0 & ncol(data_markers) > 0) {
 
 				if (remove_ensembl_ids) {
-					top_n_markers <- data_markers %>%
-						filter(!startsWith(gene, "ENS")) %>%
-						group_by(cluster) %>%
-						top_n(n = n, wt = avg_log2FC)
-				} else {
-					top_n_markers <- data_markers %>%
-						group_by(cluster) %>%
-						top_n(n = n, wt = avg_log2FC)
+					data_markers <- data_markers %>%
+						filter(!startsWith(gene, "ENS"))
 				}
+
+				if (remove_mitochondria) {
+					data_markers <- data_markers %>%
+						filter(!startsWith(gene, "MT-")) %>%
+						filter(!startsWith(gene, "mt-"))
+				}
+
+				top_n_markers <- data_markers %>%
+					group_by(cluster) %>%
+					top_n(n = n, wt = avg_log2FC)
 
 				p <- DoHeatmap(
 					dat,
