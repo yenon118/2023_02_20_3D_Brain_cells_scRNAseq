@@ -28,7 +28,9 @@ library(biomaRt)
 
 parser <- argparse::ArgumentParser()
 
-parser$add_argument("-n", "--num", type="integer", help="Top number for slice")
+parser$add_argument("-n", "--num", type="integer", help="Top number for slice", default=10)
+parser$add_argument("-o", "--organ_type", type="character", help="Organ type", default="all")
+parser$add_argument("--remove_ensembl_ids", action='store_true', help="Remove Ensembl IDs")
 
 args <- parser$parse_args()
 
@@ -38,10 +40,17 @@ n <- tryCatch({
 	return(NULL)
 })
 
-if (is.null(n)) {
-	message("n is NULL!!!")
-	quit(status=1)
-}
+organ_type <- tryCatch({
+	args$organ_type
+}, error = function(e) {
+	return(NULL)
+})
+
+remove_ensembl_ids <- tryCatch({
+	args$remove_ensembl_ids
+}, error = function(e) {
+	return(FALSE)
+})
 
 
 ##################################################
@@ -98,6 +107,24 @@ folder_path = file.path("../output/SingleR")
 
 dat <- readRDS(file = file.path(folder_path, "data.rds"))
 
+ref <- tryCatch({
+	read.table(
+		file = file.path("../data", "PanglaoDB_markers_27_Mar_2020.tsv"),
+		sep = "\t",
+		header = TRUE,
+		check.names = FALSE,
+		stringsAsFactors = FALSE
+	)
+}, error = function(e) {
+	return(NULL)
+})
+
+if (!is.null(ref)) {
+	if (organ_type != "all") {
+		ref <- ref[ref$organ == organ_type, ]
+	}
+}
+
 
 ##################################################
 # Process data
@@ -139,9 +166,17 @@ for (i in 1:length(libraries)) {
 
 		if(!is.null(data_markers)) {
 			if(nrow(data_markers) > 0 & ncol(data_markers) > 0) {
-				top_n_markers <- data_markers %>%
-					group_by(cluster) %>%
-					top_n(n = n, wt = avg_log2FC)
+
+				if (remove_ensembl_ids) {
+					top_n_markers <- data_markers %>%
+						filter(!startsWith(gene, "ENS")) %>%
+						group_by(cluster) %>%
+						top_n(n = n, wt = avg_log2FC)
+				} else {
+					top_n_markers <- data_markers %>%
+						group_by(cluster) %>%
+						top_n(n = n, wt = avg_log2FC)
+				}
 
 				p <- DoHeatmap(
 					dat,
@@ -155,7 +190,7 @@ for (i in 1:length(libraries)) {
 					plot = p,
 					path = output_path,
 					width = 14,
-					height = 10
+					height = ifelse(n > 10, 18, 10)
 				)
 
 				write.table(
@@ -167,16 +202,11 @@ for (i in 1:length(libraries)) {
 					row.names = FALSE
 				)
 
-				bm_table <- out <- tryCatch({
+				bm_table <- tryCatch({
 					getBMTable(values = unique(sort(top_n_markers$gene)), dataset = "hsapiens_gene_ensembl")
 				}, error=function(e) {
 					message(e)
 					return(NULL)
-				}, warning=function(e) {
-					message(e)
-					return(NULL)
-				}, finally=function(e) {
-					message(e)
 				})
 
 				if (!is.null(bm_table)) {
@@ -186,6 +216,14 @@ for (i in 1:length(libraries)) {
 						left_join(bm_table, by = "external_gene_name") %>%
 						as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
 
+					if (!is.null(ref)) {
+						if(nrow(ref) > 0 & ncol(ref) > 0) {
+							annotated_top_n_markers <- annotated_top_n_markers %>%
+								left_join(ref, by = c("external_gene_name" = "official gene symbol")) %>%
+								as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
+						}
+					}
+
 					write.table(
 						x = annotated_top_n_markers,
 						file = file.path(output_path, paste0("doheatmap_", n, "_", libraries[i], "_annotated.txt")),
@@ -194,6 +232,25 @@ for (i in 1:length(libraries)) {
 						quote = FALSE,
 						row.names = FALSE
 					)
+				} else {
+
+					if (!is.null(ref)) {
+						if(nrow(ref) > 0 & ncol(ref) > 0) {
+							annotated_top_n_markers <- annotated_top_n_markers %>%
+								left_join(ref, by = c("external_gene_name" = "official gene symbol")) %>%
+								as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
+
+							write.table(
+								x = annotated_top_n_markers,
+								file = file.path(output_path, paste0("doheatmap_", n, "_", libraries[i], "_annotated.txt")),
+								sep = "\t",
+								na = "",
+								quote = FALSE,
+								row.names = FALSE
+							)
+						}
+					}
+
 				}
 
 			}
