@@ -238,7 +238,7 @@ for (i in 1:length(libraries)) {
 
 					if (!is.null(ref)) {
 						if(nrow(ref) > 0 & ncol(ref) > 0) {
-							annotated_top_n_markers <- annotated_top_n_markers %>%
+							annotated_top_n_markers <- top_n_markers %>%
 								left_join(ref, by = c("external_gene_name" = "official gene symbol")) %>%
 								as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
 
