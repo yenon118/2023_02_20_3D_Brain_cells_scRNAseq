@@ -195,8 +195,8 @@ dev.off()
 # # NOTE: This process can take a long time for big datasets, comment out for expediency. More
 # # approximate techniques such as those implemented in ElbowPlot() can be used to reduce
 # # computation time
-# # dat <- JackStraw(dat, num.replicate = 500, dims = 50)
-# # dat <- ScoreJackStraw(dat, dims = 1:50)
+# dat <- JackStraw(dat, num.replicate = 500, dims = 50)
+# dat <- ScoreJackStraw(dat, dims = 1:50)
 
 # p <- JackStrawPlot(dat, dims = 1:50)
 

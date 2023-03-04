@@ -51,3 +51,9 @@
 2023_02_23_Seurat_OSA_POS/data
 2023_02_23_Seurat_OSA_POS/output
 2023_02_23_Seurat_OSA_POS/scripts/log*
+
+
+2023_03_01_plot_UMAP_tSNE/
+2023_03_02_plot_CellCounts/
+2023_03_02_plot_DoHeatmap/
+2023_03_03_annotate_cell_types/
