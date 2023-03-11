@@ -10,7 +10,7 @@
 #SBATCH --output=log_2023_02_27_run_significant_markers_summary_figures_%A-%a.out
 
 
-cd /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Brain_3D_cells_scRNAseq/2023_02_23_Seurat_OSA_NG/scripts
+cd /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_3D_Brain_cells_scRNAseq/2023_02_23_Seurat_OSA_NG/scripts
 
 
 source activate seurat

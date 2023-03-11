@@ -1,4 +1,4 @@
 sample_id,molecule_h5
-3_Cont_1,/storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Brain_3D_cells_scRNAseq/2023_02_20_cellranger/output/cellranger_count/3_Cont_1/outs/molecule_info.h5
-4_Cont_2,/storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Brain_3D_cells_scRNAseq/2023_02_20_cellranger/output/cellranger_count/4_Cont_2/outs/molecule_info.h5
-10_Cont_3,/storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Brain_3D_cells_scRNAseq/2023_02_20_cellranger/output/cellranger_count/10_Cont_3/outs/molecule_info.h5
+3_Cont_1,/storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_3D_Brain_cells_scRNAseq/2023_02_20_cellranger/output/cellranger_count/3_Cont_1/outs/molecule_info.h5
+4_Cont_2,/storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_3D_Brain_cells_scRNAseq/2023_02_20_cellranger/output/cellranger_count/4_Cont_2/outs/molecule_info.h5
+10_Cont_3,/storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_3D_Brain_cells_scRNAseq/2023_02_20_cellranger/output/cellranger_count/10_Cont_3/outs/molecule_info.h5

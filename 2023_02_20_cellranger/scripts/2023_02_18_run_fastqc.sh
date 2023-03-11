@@ -1,6 +1,6 @@
 #!/bin/sh
 
-folder_path="/storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Brain_3D_cells_scRNAseq/2023_02_20_cellranger/data/";
+folder_path="/storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_3D_Brain_cells_scRNAseq/2023_02_20_cellranger/data/";
 
 files=($(ls ${folder_path}${1}));
 file_prefixes=("${files[@]}");
@@ -24,9 +24,9 @@ do
     --job-name=2023_02_18_run_fastqc_${1}_${i} \
     --output=log_2023_02_18_run_fastqc_${1}_${i}_%j.out \
     --wrap="\
-    mkdir -p /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Brain_3D_cells_scRNAseq/2023_02_20_cellranger/output/fastqc/${1}/${i} && \
-    cd /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Brain_3D_cells_scRNAseq/2023_02_20_cellranger/output/fastqc && \
+    mkdir -p /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_3D_Brain_cells_scRNAseq/2023_02_20_cellranger/output/fastqc/${1}/${i} && \
+    cd /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_3D_Brain_cells_scRNAseq/2023_02_20_cellranger/output/fastqc && \
     module load fastqc && \
-    fastqc -o /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Brain_3D_cells_scRNAseq/2023_02_20_cellranger/output/fastqc/${1}/${i} -f fastq \
+    fastqc -o /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_3D_Brain_cells_scRNAseq/2023_02_20_cellranger/output/fastqc/${1}/${i} -f fastq \
     ${folder_path}${1}/${i}.fastq.gz";
 done

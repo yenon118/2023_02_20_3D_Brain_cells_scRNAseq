@@ -10,14 +10,14 @@
 #SBATCH --output=log_2023_02_21_run_cellranger_aggr_%A-%a.out
 
 
-mkdir -p /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Brain_3D_cells_scRNAseq/2023_02_20_cellranger/output/cellranger_aggr/
+mkdir -p /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_3D_Brain_cells_scRNAseq/2023_02_20_cellranger/output/cellranger_aggr/
 
 
-cd /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Brain_3D_cells_scRNAseq/2023_02_20_cellranger/output/cellranger_aggr/
+cd /storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_3D_Brain_cells_scRNAseq/2023_02_20_cellranger/output/cellranger_aggr/
 
 
 module load cellranger
 
 
 cellranger aggr --id=${1} \
---csv=/storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_Brain_3D_cells_scRNAseq/2023_02_20_cellranger/output/cellranger_aggr/${1}.csv
+--csv=/storage/htc/joshilab/yenc/projects/2023_02_20_AbdelnabyKhalyfa/2023_02_20_3D_Brain_cells_scRNAseq/2023_02_20_cellranger/output/cellranger_aggr/${1}.csv
