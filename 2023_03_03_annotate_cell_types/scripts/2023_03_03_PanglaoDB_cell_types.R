@@ -92,7 +92,7 @@ dat <- dat %>%
 
 ref <- ref %>%
     filter(str_detect(species, fixed("Hs", ignore_case=FALSE))) %>%
-    filter(str_detect(organ, regex("brain", ignore_case=TRUE))) %>%
+    filter(str_detect(organ, fixed("brain", ignore_case=TRUE))) %>%
     as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
 
 temp_ref <- ref 
@@ -108,6 +108,10 @@ ref <- rbind(ref, temp_ref)
 ref <- ref %>%
     distinct(.keep_all = TRUE) %>%
     distinct(official.gene.symbol, .keep_all = TRUE) %>%
+    filter(cell.type != "") %>%
+    filter(official.gene.symbol != "") %>%
+    drop_na(cell.type) %>%
+    drop_na(official.gene.symbol) %>%
     distinct(.keep_all = TRUE) %>%
     as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
 
@@ -123,6 +127,7 @@ print(dim(ref))
 
 df <- dat %>%
     left_join(ref, by = "official.gene.symbol") %>%
+    distinct(.keep_all = TRUE) %>%
     drop_na(cell.type) %>%
     filter(cell.type != "") %>%
     as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
@@ -134,12 +139,26 @@ print(dim(df))
 
 
 ##################################################
+# Save data
+##################################################
+
+write.table(
+    x = df,
+    file = file.path(output_path, paste0("PanglaoDB_cell_types_", condition, ".txt")),
+    sep = "\t",
+    na = "",
+    quote = FALSE,
+    row.names = FALSE
+)
+
+
+##################################################
 # Plotting
 ##################################################
 
 df_plotting <- df %>%
     group_by(cell.type, cluster) %>%
-    summarize(Count = n_distinct(official.gene.symbol)) %>%
+    summarize(Count = n_distinct(official.gene.symbol, na.rm = TRUE)) %>%
     ungroup() %>%
     arrange(cluster, Count, cell.type) %>%
     as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
@@ -168,4 +187,3 @@ ggsave(
     units = "in",
     dpi = 300
 )
-

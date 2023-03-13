@@ -96,6 +96,30 @@ ref <- ref %>%
     as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
 
 
+ref1 <- ref %>%
+    select(cell_name, marker) %>%
+    as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
+
+ref2 <- ref %>%
+    select(cell_name, Symbol) %>%
+    as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
+
+
+colnames(ref1) <- c("cell_name", "marker")
+colnames(ref2) <- c("cell_name", "marker")
+
+ref <- rbind(ref1, ref2)
+
+
+ref <- ref %>%
+    filter(cell_name != "") %>%
+    filter(marker != "") %>%
+    filter(!is.na(cell_name)) %>%
+    filter(!is.na(marker)) %>%
+    distinct(.keep_all = TRUE) %>%
+    as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
+
+
 print(head(dat))
 print(tail(dat))
 print(dim(dat))
@@ -107,6 +131,7 @@ print(dim(ref))
 
 df <- dat %>%
     left_join(ref, by = "marker") %>%
+    distinct(.keep_all = TRUE) %>%
     drop_na(cell_name) %>%
     filter(cell_name != "") %>%
     as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
@@ -118,12 +143,26 @@ print(dim(df))
 
 
 ##################################################
+# Save data
+##################################################
+
+write.table(
+    x = df,
+    file = file.path(output_path, paste0("Cell_Markers_cell_types_", condition, ".txt")),
+    sep = "\t",
+    na = "",
+    quote = FALSE,
+    row.names = FALSE
+)
+
+
+##################################################
 # Plotting
 ##################################################
 
 df_plotting <- df %>%
     group_by(cell_name, cluster) %>%
-    summarize(Count = n_distinct(marker)) %>%
+    summarize(Count = n_distinct(marker, na.rm = TRUE)) %>%
     ungroup() %>%
     arrange(cluster, Count, cell_name) %>%
     as.data.frame(check.names = FALSE, stringsAsFactors = FALSE)
@@ -152,4 +191,3 @@ ggsave(
     units = "in",
     dpi = 300
 )
-
